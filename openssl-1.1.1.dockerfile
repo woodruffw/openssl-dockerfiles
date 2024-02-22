@@ -23,7 +23,7 @@ RUN tar \
         --prefix=/build/openssl \
         -static \
     && make -j \
-    && make install
+    && make install_sw
 
 ENV PKG_CONFIG_PATH=/build/openssl/lib/pkgconfig/
 

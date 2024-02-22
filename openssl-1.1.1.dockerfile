@@ -22,6 +22,7 @@ RUN tar \
         --openssldir=/srv/openssl \
         --prefix=/build/openssl \
         -static \
+        no-tests \
     && make -j \
     && make install_sw
 

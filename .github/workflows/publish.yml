@@ -42,5 +42,5 @@ jobs:
           file: ${{ matrix.openssl }}.dockerfile
           context: .
           push: true
-          tags: ${{ github.repository }}/${{ matrix.openssl }}:latest
+          tags: ghcr.io/${{ github.repository }}/${{ matrix.openssl }}:latest
           labels: ${{ steps.meta.outputs.labels }}

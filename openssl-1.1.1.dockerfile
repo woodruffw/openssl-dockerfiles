@@ -25,6 +25,10 @@ RUN tar \
     && make -j \
     && make install_sw
 
+WORKDIR /build/openssl
+
+RUN rm -rf /tmp/openssl
+
 ENV PKG_CONFIG_PATH=/build/openssl/lib/pkgconfig/
 
 LABEL org.opencontainers.image.source=https://github.com/woodruffw/openssl-dockerfiles

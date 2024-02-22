@@ -25,7 +25,7 @@ RUN tar \
     && make -j \
     && make install_sw
 
-ENV PKG_CONFIG_PATH=/build/openssl/lib/pkgconfig/
+ENV PKG_CONFIG_PATH=/build/openssl/lib64/pkgconfig/
 
 LABEL org.opencontainers.image.source=https://github.com/woodruffw/openssl-dockerfiles
 LABEL org.opencontainers.image.description="Dockerfiles for some versions of OpenSSL. Not suitable for production use."

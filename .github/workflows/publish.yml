@@ -26,6 +26,7 @@ jobs:
           - openssl-3.2
           - openssl-3.3
           - boringssl
+          - libressl-3.9
     steps:
       - name: Checkout repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4

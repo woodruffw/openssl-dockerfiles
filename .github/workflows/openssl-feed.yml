@@ -7,6 +7,9 @@ on:
     - cron: "0 16 * * *"
   workflow_dispatch:
 
+permissions:
+  issues: write
+
 jobs:
   openssl-check:
     runs-on: ubuntu-latest

@@ -25,6 +25,7 @@ jobs:
           - openssl-3.1
           - openssl-3.2
           - openssl-3.3
+          - openssl-3.4
           - boringssl
           - libressl-3.9
     steps:

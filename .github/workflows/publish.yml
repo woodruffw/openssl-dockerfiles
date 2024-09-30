@@ -30,7 +30,7 @@ jobs:
           - libressl-3.9
     steps:
       - name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4
 
       - name: Log in to the Container registry
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
@@ -46,7 +46,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@5cd11c3a4ced054e52742c5fd54dca954e0edd85 # v6.7.0
+        uses: docker/build-push-action@32945a339266b759abcbdc89316275140b0fc960 # v6.8.0
         with:
           file: ${{ matrix.openssl }}.dockerfile
           context: .

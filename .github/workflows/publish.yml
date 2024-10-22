@@ -28,6 +28,7 @@ jobs:
           - openssl-3.4
           - boringssl
           - libressl-3.9
+          - libressl-4.0
     steps:
       - name: Checkout repository
         uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4

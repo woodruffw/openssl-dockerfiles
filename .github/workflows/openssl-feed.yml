@@ -14,7 +14,7 @@ jobs:
   openssl-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: guilhem/rss-issues-action@986ed8da58498e128286eee9d9a1ba2e0a3b7902 # v0.5.2
+      - uses: guilhem/rss-issues-action@986ed8da58498e128286eee9d9a1ba2e0a3b7902 # 0.5.2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           feed: https://github.com/openssl/openssl/releases.atom
@@ -25,7 +25,7 @@ jobs:
   libressl-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: guilhem/rss-issues-action@986ed8da58498e128286eee9d9a1ba2e0a3b7902 # v0.5.2
+      - uses: guilhem/rss-issues-action@986ed8da58498e128286eee9d9a1ba2e0a3b7902 # 0.5.2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           feed: https://github.com/libressl/portable/releases.atom

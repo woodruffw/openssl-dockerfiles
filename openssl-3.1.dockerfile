@@ -30,7 +30,7 @@ WORKDIR /build/openssl
 
 RUN rm -rf /tmp/openssl
 
-ENV PKG_CONFIG_PATH=/build/openssl/lib64/pkgconfig/
+ENV PKG_CONFIG_PATH=/build/openssl/lib64/pkgconfig/:/build/openssl/lib/pkgconfig/
 
 LABEL org.opencontainers.image.source=https://github.com/woodruffw/openssl-dockerfiles
 LABEL org.opencontainers.image.description="Dockerfiles for some versions of OpenSSL. Not suitable for production use."

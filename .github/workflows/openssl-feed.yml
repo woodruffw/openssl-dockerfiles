@@ -7,12 +7,11 @@ on:
     - cron: "0 16 * * *"
   workflow_dispatch:
 
-permissions:
-  issues: write
-
 jobs:
   openssl-check:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - uses: guilhem/rss-issues-action@986ed8da58498e128286eee9d9a1ba2e0a3b7902 # 0.5.2
         with:
@@ -24,6 +23,8 @@ jobs:
 
   libressl-check:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - uses: guilhem/rss-issues-action@986ed8da58498e128286eee9d9a1ba2e0a3b7902 # 0.5.2
         with:

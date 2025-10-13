@@ -32,6 +32,7 @@ jobs:
           - libressl-3.9
           - libressl-4.0
           - libressl-4.1
+          - libressl-4.2
     steps:
       - name: Checkout repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0

@@ -12,7 +12,7 @@ RUN apk add --no-cache \
         perl \
         pkgconf
 
-ADD https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-4.1.1.tar.gz libressl-src.tar.gz
+ADD https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-4.1.2.tar.gz libressl-src.tar.gz
 
 RUN tar \
         --extract \

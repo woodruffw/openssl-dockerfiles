@@ -12,7 +12,7 @@ RUN apk add --no-cache \
         perl \
         pkgconf
 
-ADD https://github.com/openssl/openssl/releases/download/openssl-3.3.6/openssl-3.3.6.tar.gz openssl-src.tar.gz
+ADD https://github.com/openssl/openssl/releases/download/openssl-3.3.7/openssl-3.3.7.tar.gz openssl-src.tar.gz
 
 RUN tar \
         --extract \

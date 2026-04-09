@@ -18,7 +18,7 @@ RUN apk add --no-cache \
     make \
     linux-headers
 
-RUN git clone --depth 1 https://github.com/aws/aws-lc.git
+RUN git clone --depth 1 --branch v1.71.0 https://github.com/aws/aws-lc.git
 
 WORKDIR /tmp/aws-lc
 

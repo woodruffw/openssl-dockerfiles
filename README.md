@@ -17,15 +17,9 @@ These Dockerfiles produce library builds of OpenSSL only.
 
 The Dockerfiles themselves are licensed under Apache 2.0.
 
-OpenSSL is licensed under the [OpenSSL License](https://spdx.org/licenses/OpenSSL.html)
-prior to 3.0, and under Apache 2.0 afterwards.
+See OpenSSL and its forks for specific licensing terms:
 
-[BoringSSL is licensed] partially under the OpenSSL License and partially
-under the ISC license.
-
-[LibreSSL is licensed] partially under the OpenSSL license, partially under
-the ISC license, or placed into the public domain.
-
-[BoringSSL is licensed]: https://github.com/google/boringssl/blob/master/LICENSE
-
-[LibreSSL is licensed]: https://github.com/libressl/openbsd/blob/master/src/lib/libssl/LICENSE
+- [OpenSSL](https://github.com/openssl/openssl/blob/master/LICENSE.txt)
+- [BoringSSL](https://github.com/google/boringssl/blob/master/LICENSE)
+- [LibreSSL](https://github.com/libressl/openbsd/blob/master/src/lib/libssl/LICENSE)
+- [AWS-LC](https://github.com/aws/aws-lc/blob/main/LICENSE)

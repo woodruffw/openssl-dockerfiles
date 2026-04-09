@@ -33,3 +33,16 @@ jobs:
           prefix: "New LibreSSL release:"
           lastTime: "24h"
           labels: "libressl-version"
+
+  aws-lc-check:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: guilhem/rss-issues-action@986ed8da58498e128286eee9d9a1ba2e0a3b7902 # 0.5.2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          feed: https://github.com/aws/aws-lc/releases.atom
+          prefix: "New AWS-LC release:"
+          lastTime: "24h"
+          labels: "aws-lc-version"

@@ -34,6 +34,7 @@ jobs:
           - libressl-4.0
           - libressl-4.1
           - libressl-4.2
+          - aws-lc
         platform:
           - amd64
           - arm64
@@ -96,6 +97,7 @@ jobs:
           - libressl-4.0
           - libressl-4.1
           - libressl-4.2
+          - aws-lc
     steps:
       - name: Log in to the Container registry
         uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0

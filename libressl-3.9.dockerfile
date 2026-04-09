@@ -18,12 +18,11 @@ RUN tar \
         --extract \
         --file libressl-src.tar.gz \
         --strip 1 \
-    && ./config \
-        --openssldir=/srv/libressl \
+    && ./configure \
+        --disable-shared \
+        --disable-tests \
+        --with-openssldir=/srv/libressl \
         --prefix=/build/libressl \
-        -static \
-        no-tests \
-        no-apps \
     && make -j \
     && make install_sw
 

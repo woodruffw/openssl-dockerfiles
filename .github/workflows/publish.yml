@@ -29,6 +29,7 @@ jobs:
           - openssl-3.4
           - openssl-3.5
           - openssl-3.6
+          - openssl-4.0
           - boringssl
           - libressl-3.9
           - libressl-4.0
@@ -92,6 +93,7 @@ jobs:
           - openssl-3.4
           - openssl-3.5
           - openssl-3.6
+          - openssl-4.0
           - boringssl
           - libressl-3.9
           - libressl-4.0

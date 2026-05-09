@@ -37,7 +37,7 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           dockerfiles="$(
-            git diff --diff-filter=ACMR --name-only "$BASE_SHA" "$HEAD_SHA" -- '*.dockerfile' |
+            git diff --no-renames --diff-filter=ACM --name-only "$BASE_SHA" "$HEAD_SHA" -- '*.dockerfile' |
               jq -R -s -c 'split("\n")[:-1]'
           )"
           echo "dockerfiles=$dockerfiles" >> "$GITHUB_OUTPUT"
@@ -62,6 +62,9 @@ jobs:
           DOCKERFILES: ${{ needs.changed-dockerfiles.outputs.dockerfiles }}
         run: |
           mapfile -t dockerfiles < <(jq -r '.[]' <<< "$DOCKERFILES")
+          if [ "${#dockerfiles[@]}" -eq 0 ]; then
+            exit 0
+          fi
           for dockerfile in "${dockerfiles[@]}"; do
             docker buildx build \
               --file "$dockerfile" \

@@ -49,6 +49,10 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        dockerfile: ${{ fromJSON(needs.changed-dockerfiles.outputs.dockerfiles) }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -58,22 +62,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
 
-      - name: Build changed Dockerfiles
-        env:
-          DOCKERFILES: ${{ needs.changed-dockerfiles.outputs.dockerfiles }}
-        run: |
-          dockerfile_lines="$(jq -r '.[] | select(length > 0)' <<< "$DOCKERFILES")"
-          if [ -z "$dockerfile_lines" ]; then
-            exit 0
-          fi
-          mapfile -t dockerfiles < <(printf '%s\n' "$dockerfile_lines")
-          for dockerfile in "${dockerfiles[@]}"; do
-            echo "Building $dockerfile"
-            docker buildx build \
-              --file "$dockerfile" \
-              --platform linux/amd64 \
-              .
-          done
+      - name: Build changed Dockerfile
+        uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          platforms: linux/amd64
+          push: false
 
   build:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'

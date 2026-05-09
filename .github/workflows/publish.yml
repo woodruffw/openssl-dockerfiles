@@ -43,7 +43,7 @@ jobs:
           echo "dockerfiles=$dockerfiles" >> "$GITHUB_OUTPUT"
 
   smoketest:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && needs.changed-dockerfiles.outputs.dockerfiles != '[]'
     needs: changed-dockerfiles
     runs-on: ubuntu-24.04
     permissions:
@@ -61,7 +61,8 @@ jobs:
         env:
           DOCKERFILES: ${{ needs.changed-dockerfiles.outputs.dockerfiles }}
         run: |
-          jq -r '.[]' <<< "$DOCKERFILES" | while read -r dockerfile; do
+          mapfile -t dockerfiles < <(jq -r '.[]' <<< "$DOCKERFILES")
+          for dockerfile in "${dockerfiles[@]}"; do
             docker buildx build \
               --file "$dockerfile" \
               --platform linux/amd64 \

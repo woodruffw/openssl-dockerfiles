@@ -38,6 +38,7 @@ jobs:
         run: |
           dockerfiles="$(
             git diff --no-renames --diff-filter=ACM --name-only "$BASE_SHA" "$HEAD_SHA" -- '*.dockerfile' |
+              awk -F/ 'NF == 1' |
               jq -R -s -c 'split("\n")[:-1]'
           )"
           echo "dockerfiles=$dockerfiles" >> "$GITHUB_OUTPUT"
@@ -61,7 +62,8 @@ jobs:
         env:
           DOCKERFILES: ${{ needs.changed-dockerfiles.outputs.dockerfiles }}
         run: |
-          mapfile -t dockerfiles < <(jq -r '.[]' <<< "$DOCKERFILES")
+          dockerfiles="$(jq -r '.[]' <<< "$DOCKERFILES")"
+          mapfile -t dockerfiles <<< "$dockerfiles"
           for dockerfile in "${dockerfiles[@]}"; do
             echo "Building $dockerfile"
             docker buildx build \

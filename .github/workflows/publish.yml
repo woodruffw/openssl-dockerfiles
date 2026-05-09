@@ -63,6 +63,7 @@ jobs:
         run: |
           mapfile -t dockerfiles < <(jq -r '.[]' <<< "$DOCKERFILES")
           for dockerfile in "${dockerfiles[@]}"; do
+            echo "Building $dockerfile"
             docker buildx build \
               --file "$dockerfile" \
               --platform linux/amd64 \

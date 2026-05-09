@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - "*.dockerfile"
+  pull_request:
+    paths:
+      - "*.dockerfile"
   workflow_dispatch:
 
 env:
@@ -13,7 +16,62 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  changed-dockerfiles:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      dockerfiles: ${{ steps.changed.outputs.dockerfiles }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Collect changed Dockerfiles
+        id: changed
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          dockerfiles="$(
+            git diff --no-renames --diff-filter=ACM --name-only "$BASE_SHA" "$HEAD_SHA" -- '*.dockerfile' |
+              awk -F/ 'NF == 1' |
+              jq -R -s -c 'split("\n") | map(select(length > 0))'
+          )"
+          echo "dockerfiles=$dockerfiles" >> "$GITHUB_OUTPUT"
+
+  smoketest:
+    if: github.event_name == 'pull_request' && needs.changed-dockerfiles.outputs.dockerfiles != '[]'
+    needs: changed-dockerfiles
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        dockerfile: ${{ fromJSON(needs.changed-dockerfiles.outputs.dockerfiles) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
+
+      - name: Build changed Dockerfile
+        uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          platforms: linux/amd64
+          push: false
+
   build:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
@@ -78,6 +136,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   merge:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
     needs: build
     permissions:

@@ -62,9 +62,6 @@ jobs:
           DOCKERFILES: ${{ needs.changed-dockerfiles.outputs.dockerfiles }}
         run: |
           mapfile -t dockerfiles < <(jq -r '.[]' <<< "$DOCKERFILES")
-          if [ "${#dockerfiles[@]}" -eq 0 ]; then
-            exit 0
-          fi
           for dockerfile in "${dockerfiles[@]}"; do
             docker buildx build \
               --file "$dockerfile" \

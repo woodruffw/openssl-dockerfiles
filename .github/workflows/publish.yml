@@ -62,8 +62,8 @@ jobs:
         env:
           DOCKERFILES: ${{ needs.changed-dockerfiles.outputs.dockerfiles }}
         run: |
-          dockerfiles="$(jq -r '.[]' <<< "$DOCKERFILES")"
-          mapfile -t dockerfiles <<< "$dockerfiles"
+          dockerfile_lines="$(jq -r '.[]' <<< "$DOCKERFILES")"
+          mapfile -t dockerfiles <<< "$dockerfile_lines"
           for dockerfile in "${dockerfiles[@]}"; do
             echo "Building $dockerfile"
             docker buildx build \

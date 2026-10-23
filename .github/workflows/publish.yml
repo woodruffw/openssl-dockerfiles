@@ -95,6 +95,7 @@ jobs:
           - libressl-4.1
           - libressl-4.2
           - libressl-4.3
+          - libressl-4.4
           - aws-lc
         platform:
           - amd64
@@ -162,6 +163,7 @@ jobs:
           - libressl-4.1
           - libressl-4.2
           - libressl-4.3
+          - libressl-4.4
           - aws-lc
     steps:
       - name: Log in to the Container registry
